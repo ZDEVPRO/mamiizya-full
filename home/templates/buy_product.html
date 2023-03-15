@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Sipariş Resmileştirme - Mamizya{% endblock %}
+
+{% block content %}
+    <main>
+        {% block sidebar %}{% include 'components/sidebar.html' %}{% endblock %}
+        <!-- checkout-area start -->
+        <section class="checkout-area pt-100 pb-70">
+            <div class="container container-small">
+                <form action="{% url 'buy-products' %}" method="post"> {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="checkbox-form">
+                                <h3>Sipariş Resmileştirme</h3>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="checkout-form-list">
+                                            <label>Ism <span class="required">*</span></label>
+                                            <input name="first_name" type="text" placeholder=""/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="checkout-form-list">
+                                            <label>Soyadı <span class="required">*</span></label>
+                                            <input name="last_name" type="text" placeholder=""/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="checkout-form-list">
+                                            <label>Telefon numaran *</label>
+                                            <input name="phone_number" type="text" placeholder=""/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="checkout-form-list">
+                                            <label>Adres <span class="required">*</span></label>
+                                            <input name="region" type="text" placeholder="Vilayet / Şehir"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="checkout-form-list">
+                                            <input name="district" type="text" placeholder="Sis / Yer adı"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="checkout-form-list">
+                                            <input name="address" type="text" placeholder="Sokak adı, Ev numarası"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="different-address">
+                                    <div class="order-notes">
+                                        <div class="checkout-form-list">
+                                            <label>ek mesaj</label>
+                                            <textarea name="client_notes" id="checkout-mess" cols="30" rows="10"
+                                                      placeholder="Siparişinizle ilgili notlar, örn. Teslimat için özel notlar"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="your-order mb-30 ">
+                                <h3>Siparişiniz</h3>
+                                <div class="your-order-table table-responsive">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th class="product-name">Ürün</th>
+                                            <th class="product-name">Boyut</th>
+                                            <th class="product-name">Renk</th>
+                                            <th class="product-total">Toplam</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for rs in cart_products %}
+                                            <tr class="cart_item">
+                                                <td style="padding-top: 15px; padding-bottom: 15px; padding-right: 15px;"
+                                                    class="product-name">
+                                                    {{ rs.product.title }} <strong class="product-quantity">
+                                                    × {{ rs.quantity }}</strong>
+                                                </td>
+                                                <td class="product-total">
+                                                    <span class="amount">{{ rs.size }}</span>
+                                                </td>
+                                                <td class="product-total">
+                                                    <span class="amount">{{ rs.color }}</span>
+                                                </td>
+                                                <td class="product-total">
+                                                    <span class="amount">{{ rs.amount }} ₺</span>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                        <tr class="order-total">
+                                            <th>Siparişin toplam maliyeti:</th>
+                                            <td><strong><span class="amount">{{ total_price }} ₺</span></strong>
+                                            </td>
+                                        </tr>
+                                        <tr class="order-total">
+                                            <th>Toplam ürün sayısı:</th>
+                                            <td><strong><span class="amount">{{ total_products }}</span></strong>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                                <div class="payment-method">
+                                    <div class="accordion" id="checkoutAccordion">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="checkoutOne">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#bankOne" aria-expanded="true"
+                                                        aria-controls="bankOne">
+                                                    Ödeme yöntemi
+                                                </button>
+                                            </h2>
+                                            <div id="bankOne" class="accordion-collapse collapse show"
+                                                 aria-labelledby="checkoutOne" data-bs-parent="#checkoutAccordion">
+                                                <div class="accordion-body">
+                                                    Ürünler için doğrudan banka havalesi ile ödeme yaparsınız veya
+                                                    sadece ürünü nakit olarak aldıktan sonra ödeyebilirsin
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-button-payment mt-20">
+                                        <button type="submit" class="fill-btn">Sipariş vermek</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- checkout-area end -->
+
+        <div class="pt-60 pb-60"></div>
+    </main>
+    <br>
+{% endblock %}

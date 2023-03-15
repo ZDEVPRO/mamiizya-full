@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Kirish - Mamizya {% endblock %}
+
+{% block content %}
+    <div style="margin-bottom: 50px;"></div>
+
+    <!-- register area start  -->
+    <div class="register-area pt-120 pb-120">
+        <div class="container container-small">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    {% block messages %}{% include 'components/messages.html' %}{% endblock %}
+                    <div class="signup-form-wrapper">
+                        <form action="{% url 'login' %}" method="post"> {% csrf_token %}
+                            <div class="signup-wrapper">
+                                <input name="username" type="text" placeholder="Foydalanuvchi nomi">
+                            </div>
+                            <div class="signup-wrapper">
+                                <input name="password" type="password" placeholder="Parol">
+                            </div>
+                            <div class="sing-buttom mb-20">
+                                <button type="submit" class="sing-btn">Kirish</button>
+                            </div>
+                            <div class="registered wrapper">
+                                <div class="not-register">
+                                    <span>Hisobingiz yo'qmi? U holda</span><span><a href="{% url 'register' %}">Ro'yhatdan o'tish</a></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- register area end  -->
+
+
+    <div style="margin-bottom: 150px;"></div>
+    <br>
+    <br>
+    <br>
+{% endblock %}

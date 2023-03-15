@@ -1,0 +1,131 @@
+{% load static %}
+
+{#<style>#}
+{#    .dropbtn {#}
+{#        background-color: #4CAF50;#}
+{#        color: white;#}
+{#        padding: 16px;#}
+{#        font-size: 16px;#}
+{#        border: none;#}
+{#        cursor: pointer;#}
+{#    }#}
+{##}
+{#    .dropdown {#}
+{#        position: relative;#}
+{#        display: inline-block;#}
+{#    }#}
+{##}
+{#    .dropdown-content {#}
+{#        display: none;#}
+{#        position: absolute;#}
+{#        background-color: #f9f9f9;#}
+{#        min-width: 160px;#}
+{#        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .dropdown-content a {#}
+{#        color: black;#}
+{#        padding: 12px 16px;#}
+{#        text-decoration: none;#}
+{#        display: block;#}
+{#    }#}
+{##}
+{#    .dropdown-content a:hover {#}
+{#        background-color: #f1f1f1#}
+{#    }#}
+{##}
+{#    .dropdown:hover .dropdown-content {#}
+{#        display: block;#}
+{#    }#}
+{##}
+{#    .dropdown:hover .dropbtn {#}
+{#        background-color: #3e8e41;#}
+{#    }#}
+{#</style>#}
+
+<!-- header area start  -->
+<header class="header4">
+    <div id="header-sticky" class="header-main header-main1">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="header-main-content-wrapper">
+                        <div class="header-main-left header-main-left-header1">
+                            <div class="header-logo header1-logo">
+                                <a href="{% url 'index' %}" class="logo-bl">
+                                    {#                                    <img src="{% static 'assets/img/logo/logo-bl-tr.png' %}" alt="logo-img">#}
+                                    <h1>Mamizya</h1>
+                                </a>
+                            </div>
+                            <div class="main-menu main-menu4 d-none d-lg-block">
+                                <nav id="mobile-menu">
+                                    <ul>
+                                        <li><a href="{% url 'index' %}">Ana sayfa</a></li>
+                                        <li><a href="{% url 'shop' %}">Mağaza</a></li>
+                                        <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+                                        <li><a href="{% url 'contact' %}">İletişim</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="header-main-right header-main-right-header1">
+                            <form action="{% url 'search' %}" method="get"
+                                  class="filter-search-input header-search d-none d-xl-inline-block">
+                                <input type="text" name="keywords" placeholder="Aramak ..." value="{{ keywords }}">
+                                <button type="submit"><i class="fal fa-search"></i></button>
+                            </form>
+
+                            {#                            <div class="action-item">#}
+                            {% if request.user.is_authenticated %}
+                                <div class="main-menu main-menu2 d-none d-lg-block">
+                                    <nav id="mobile-menu">
+                                        <ul>
+                                            <li style="margin-right: 5px;" class="menu-item-has-children"><a> <i class="fa fa-user"></i> Hesabım</a>
+                                                <ul class="sub-menu">
+                                                    <li><a><i class="fa fa-user"></i> {{ request.user.first_name }} {{ request.user.last_name }}</a></li>
+                                                    <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> çıkış</a></li>
+                                                </ul>
+                                            </li>
+                                            <li style="padding-right: 13px; padding-top: 0;">
+                                                <div class="action-list d-none d-md-flex action-list-header4">
+                                                    <div class="action-item">
+                                                        <a style="padding-right: 13px; padding-top: 0;"
+                                                           href="{% url 'cart' %}" class="view-cart-button">
+                                                            <i class="fal fa-shopping-bag"></i>
+                                                            <span class="action-item-number">{{ cart_items_count }}</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                            {% else %}
+                                <a href="{% url 'login' %}">
+                                    Kirish <i class="fa fa-user"></i>
+                                </a>
+                            {% endif %}
+
+
+                            {#                            </div>#}
+                        </div>
+                        <div class="menu-bar d-xl-none ml-20 mt-20">
+                            <a class="side-toggle" href="javascript:void(0)">
+                                <div class="bar-icon">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</header>
+<!-- header area end -->
+

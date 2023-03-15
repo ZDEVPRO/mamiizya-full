@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mağaza - Mamizya{% endblock %}
+
+{% block content %}
+    <main>
+        {% block sidebar %}{% include 'components/sidebar.html' %}{% endblock %}
+
+        <!-- shop main area start  -->
+        <div class="shop-main-area pt-120 pb-10">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="shop-main-wrapper mb-60">
+                            <div class="shop-main-wrapper-head mb-30">
+                                <form action="/shop/" method="post"> {% csrf_token %}
+                                    <div class="sort-type-filter">
+                                        <div class="sorting-type">
+                                            <span>Filtreleme : </span>
+                                            <select onchange="this.form.submit()" class="sorting-list"
+                                                    name="keyword" id="sorting-list">
+                                                <option value="all">Her şey</option>
+                                                {% for rs in category %}
+                                                    <option {% if rs.link == keyword %}selected{% endif %} value="{{ rs.link }}">{{ rs.title }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            {% if products %}
+                                <div class="products-wrapper products-full-4-column">
+                                    {% for rs in page_obj.object_list %}
+                                        <div class="single-product">
+                                            <div class="product-image pos-rel">
+                                                <a href="{% url 'shop-detail' rs.id %}" class=""><img
+                                                        src="{{ rs.image.url }}" alt="img"></a>
+
+                                                 <div class="product-action-bottom">
+                                                    <a style="width: 80%;" href="{% url 'info' rs.id %}" class="add-cart-btn"><i class="fal fa-shopping-bag"></i>Sotib olish</a>
+                                                </div>
+                                            </div>
+                                            <div class="product-desc">
+                                                <div class="product-name"><a
+                                                        href="{% url 'shop-detail' rs.id %}">{{ rs.title }}</a></div>
+                                                <div class="product-price">
+                                                    <span class="price-now">{{ rs.price }} ₺</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {% if count > 12 %}
+                                    <div class="common-pagination mt-30 mb-20">
+                                        <ul>
+                                            {% if page_obj.has_previous %}
+                                                <li><a href="?page={{ page_obj.previous_page_number }}"><i
+                                                        class="fal fa-angle-left"></i></a></li>
+                                            {% endif %}
+                                            <li class="active"><a
+                                                    href="?page{{ page_obj.number }}"><span>{{ page_obj.number }}</span></a>
+                                            </li>
+                                            {% if page_obj.has_next %}
+                                                <li>
+                                                    <a href="?page={{ page_obj.next_page_number }}"><span>{{ page_obj.next_page_number }}</span></a>
+                                                </li>
+                                                <li><a href="?page={{ page_obj.next_page_number }}"><i
+                                                        class="fal fa-angle-right"></i></a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <div style="text-align: center; margin-bottom: 40%;">
+                                    <h1>Ürün bulunamadı!</h1>
+                                    <a style="margin-top: 10px;" href="/shop/" class="fill-btn">Mağaza sayfasına geri
+                                        dön</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- shop main area end  -->
+
+
+    </main>
+
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock %}

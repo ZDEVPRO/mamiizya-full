@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Sepet - Mamizya {% endblock %}
+
+{% block content %}
+    <!-- cart area start  -->
+    <section class="cart-area pt-100 pb-100">
+        <div class="container container-small">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-content table-responsive">
+                        {% if products %}
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="product-thumbnail">Resim</th>
+                                    <th class="cart-product-name">Ürün</th>
+                                    <th class="product-price">Her birinin fiyatı</th>
+                                    <th class="product-price">Renk</th>
+                                    <th class="product-price">Boyut</th>
+                                    <th class="product-quantity">Miktar</th>
+                                    <th class="product-subtotal">Cami</th>
+                                    <th class="product-remove">Kapamak</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if products %}
+                                    {% for rs in products %}
+                                        <tr>
+                                            <td class="product-thumbnail"><a><img src="{{ rs.product.image.url }}"
+                                                                                  alt="img"></a></td>
+                                            <td class="product-name"><a>{{ rs.product.title }}</a></td>
+                                            <td class="product-price"><span class="amount">{{ rs.product.price }} ₺</span>
+                                            </td>
+                                            <td class="product-price"><span class="amount">{{ rs.color }}</span></td>
+                                            <td class="product-price"><span class="amount">{{ rs.size }}</span></td>
+                                            <td class="product-quantity text-center">
+                                                <div class="product-quantity mt-10 mb-10">
+                                                    <div class="product-quantity-form">
+                                                        <form action="{% url 'change-quantity' rs.id %}" method="get">
+                                                            <button class="cart-minus"><i class="far fa-minus"></i>
+                                                            </button>
+                                                            <input onchange="this.form.submit()" name="quantity"
+                                                                   class="cart-input" type="text"
+                                                                   value="{{ rs.quantity }}">
+                                                            <button class="cart-plus"><i class="far fa-plus"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="product-subtotal"><span class="amount">{{ rs.amount }} ₺</span>
+                                            </td>
+                                            <td class="product-remove"><a href="{% url 'remove-cart' rs.id %}"><i class="fa fa-times"></i></a></td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <div style="margin-top: 100px;"></div>
+                            <h1 style="text-align: center;"><i class="fas fa-shopping-cart"></i> Kart boş</h1>
+
+                            <div style="margin-bottom: 450px;"></div>
+                        {% endif %}
+                    </div>
+
+                    {% if products %}
+                        <div class="row">
+                            <div class="col-md-5 ml-auto">
+                                <div class="cart-page-total">
+                                    <h2>Bilgi</h2>
+                                    <ul class="mb-20">
+                                        <li>Ürün sayısı <span>{{ total_products }}</span></li>
+                                        <li>Toplam fiyat <span>{{ total_price }} ₺</span></li>
+                                    </ul>
+                                    <a class="border-btn" href="{% url 'buy-products' %}">Ürün izni</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 50px;"></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- cart area end  -->
+
+    <div class="pt-60"></div>
+{% endblock %}

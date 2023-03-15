@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ product.title }} - Mamizya{% endblock %}
+
+{% block content %}
+    <main>
+        {% block sidebar %}{% include 'components/sidebar.html' %}{% endblock %}
+        <br>
+        <br>
+        <!-- shop details area start  -->
+        <section class="shop-details-area pt-20 pb-90">
+            <div class="container container-small">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="product-details-tab-wrapper mb-30">
+                            <div class="product-details-tab">
+                                <div class="tab-content" id="productDetailsTab">
+                                    <div class="tab-pane fade active show" id="pro-{{ product.id }}" role="tabpanel"
+                                         aria-labelledby="pro-1-tab">
+                                        <img class="active" src="{{ product.image.url }}" alt="product">
+                                    </div>
+                                    {% for rs in images %}
+                                        <div class="tab-pane fade" id="pro-{{ rs.id }}" role="tabpanel"
+                                             aria-labelledby="pro-2-tab">
+                                            <img class="active" src="{{ rs.image.url }}" alt="product">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="product-details-nav">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="pro-1-tab" data-bs-toggle="tab"
+                                                data-bs-target="#pro-{{ product.id }}" type="button" role="tab"
+                                                aria-controls="pro-1"
+                                                aria-selected="false">
+                                            <img src="{{ product.image.url }}" alt="...">
+                                        </button>
+                                    </li>
+                                    {% for rs in images %}
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="pro-2-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#pro-{{ rs.id }}"
+                                                    type="button" role="tab" aria-controls="pro-2" aria-selected="true">
+                                                <img src="{{ rs.image.url }}" alt="...">
+                                            </button>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="product-side-info mb-30">
+                            <h4 class="product-name mb-10">{{ product.title }}</h4>
+                            <span class="product-price">{{ product.price }} ₺</span>
+
+                            <div class="mb-30">
+                                {{ product.content|safe }}
+                            </div>
+                            <div class="product__details__tag tagcloud mt-25 mb-10">
+                                <span>Mevcut boyutlar : </span>
+                                {% for rs in sizes %}
+                                    <a rel="tag">{{ rs.title }}</a>
+                                {% endfor %}
+                                <br>
+                                <span>Mevcut renkler : </span>
+                                {% for rs in colors %}
+                                    <a rel="tag">{{ rs.title }}</a>
+                                {% endfor %}
+                            </div>
+                            <div class="product__details__tag tagcloud mt-25 mb-10">
+                            </div>
+                            <a href="{% url 'info' product.id %}" class="fill-btn">Satın almak</a>
+                        </div>
+                    </div>
+                </div>
+
+                {% if product.additional_description %}
+                    <div class="product_info-faq-area pb-0">
+                        <div class="">
+                            <nav class="product-details-nav">
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active show" id="nav-general-tab"
+                                       data-bs-toggle="tab"
+                                       href="#nav-general"
+                                       role="tab" aria-selected="true">Açıklama</a>
+                                </div>
+                            </nav>
+
+                            <div class="tab-content product-details-content" id="nav-tabContent">
+                                <div class="tab-pane fade active show" id="nav-general" role="tabpanel">
+                                    <div class="tabs-wrapper mt-35">
+                                        <div class="product__details-des">
+                                            <p>
+                                                {{ product.additional_description }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+        <!-- shop details area end  -->
+    </main>
+{% endblock %}

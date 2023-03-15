@@ -1,0 +1,54 @@
+{% load static %}
+
+<!-- side toggle start -->
+<div class="fix">
+    <div class="side-info">
+        <div class="side-info-content">
+            <div class="offset-widget offset-logo mb-40">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <a href="{% url 'index' %}">
+                            <h1>Mamizya</h1>
+                        </a>
+                    </div>
+                    <div class="col-3 text-end">
+                        <button class="side-info-close"><i class="fal fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-menu d-lg-none fix"></div>
+            <div class="offset-profile-action d-md-none">
+                <div class="offset-widget mb-40">
+                    <div class="action-list action-list-header1">
+                        <div class="action-item action-item-cart">
+                            <a href="{% url 'cart' %}" class="view-cart-button">
+                                <i class="fal fa-shopping-bag"></i>
+                                <span class="action-item-number">{{ cart_items_count }}</span></a>
+                        </div>
+                        <br>
+                        <div class="action-item action-item-wishlist">
+                            <a class="view-wishlist-button">
+                                <i class="fal fa-user"></i> {{ request.user.first_name }}
+                            </a>
+                        </div>
+                        <div class="action-item action-item-wishlist">
+                            <a class="view-wishlist-button">
+                                <i class="fal fa-sign-out"></i> çıkış
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="offset-widget offset_searchbar mb-30">
+                <form action="/search/" class="filter-search-input">
+                    <input type="text" name="keywords" placeholder="Aramak ...">
+                    <button><i class="fal fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="offcanvas-overlay"></div>
+<div class="offcanvas-overlay-white"></div>
+
+<!-- side toggle end -->

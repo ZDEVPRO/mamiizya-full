@@ -1,0 +1,41 @@
+<style>
+    .alert {
+        padding: 20px;
+        background-color: #6db986;
+        color: white;
+        text-align: center;
+    }
+
+    .danger {
+        padding: 20px;
+        background-color: darkred;
+        color: white;
+        text-align: center;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
+</style>
+
+
+{% if messages %}
+    {% for message in messages %}
+        <div {% if message.tags == 'error' %} class="danger" {% else %} class="alert" {% endif %}>
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+    {% endfor %}
+    <br>
+{% endif %}

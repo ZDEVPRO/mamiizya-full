@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Ro'yhatdan o'tish - Mamizya {% endblock %}
+
+{% block content %}
+    <!-- register area start  -->
+    <div class="register-area pt-120 pb-120">
+        <div class="container container-small">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    {% block messages %}{% include 'components/messages.html' %}{% endblock %}
+                    <div class="signup-form-wrapper">
+                        <form action="{% url 'register' %}" method="post">{% csrf_token %}
+                            <div class="signup-wrapper">
+                                <input name="first_name" type="text" placeholder="Ism" required>
+                            </div>
+                            <div class="signup-wrapper">
+                                <input name="last_name" type="text" placeholder="Familiya" required>
+                            </div>
+                            <div class="signup-wrapper">
+                                <input name="username" type="text" placeholder="Foydalanuvchi nomi" required>
+                            </div>
+                            <div class="signup-wrapper">
+                                <input name="phone" type="text" placeholder="Telefon raqam" required>
+                            </div>
+                            <div class="signup-wrapper">
+                                <input name="password1" type="password" placeholder="Sizning parolingiz" required>
+                            </div>
+                            <div class="signup-wrapper">
+                                <input name="password2" type="password" placeholder="Parolni takrorlang" required>
+                            </div>
+                            <div class="sing-buttom mb-20">
+                                <button type="submit" class="sing-btn">Ro'yhatdan o'tish</button>
+                            </div>
+                            <div class="registered wrapper">
+                                <div class="not-register">
+                                    <span>Hisobingiz bormi? U holda</span><span><a
+                                        href="{% url 'login' %}">Kirish</a></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- register area end  -->
+
+
+    <div style="margin-bottom: 150px;"></div>
+    <br>
+    <br>
+    <br>
+{% endblock %}

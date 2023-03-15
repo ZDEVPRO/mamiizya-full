@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% block title %}Mamizya{% endblock %}
+{% load static %}
+
+{% block content %}
+    <style>
+        .danger {
+            padding: 10px;
+            background-color: darkred;
+            color: white;
+            text-align: center;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+    </style>
+
+
+    <main>
+        {% block sidebar %}{% include 'components/sidebar.html' %}{% endblock %}
+
+        <!-- contact main area start  -->
+        <section class="contact-main-area pt-100 pb-60">
+            <div class="container container-small">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12">
+                        <div class="contact-main-wrapper mb-60">
+                            <div class="section-title">
+                                <h2 class="section-main-title mb-40"><i class="fa fa-shopping-cart"></i> Satın almak</h2>
+
+                                <div id="alert-message"></div>
+
+                                <p>Satın almak için gerekli bilgileri girin</p>
+                            </div>
+                            <div class="contact-main-form">
+                                <form method="post" id="info-form"> {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="single-form-input">
+                                                <input name="product_title" type="text" value="{{ product.title }}"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="single-form-input">
+                                                <label style="margin-bottom: 10px;">Ürün miktarını girin:</label>
+                                                <br>
+                                                <div class="product-quantity-cart mb-25">
+                                                    <div class="product-quantity-form">
+                                                        <button class="cart-minus"><i class="far fa-minus"></i>
+                                                        </button>
+                                                        <input class="cart-input" type="text" name="product_quantity"
+                                                               value="1">
+                                                        <button class="cart-plus"><i class="far fa-plus"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="country-select">
+                                                <select name="product_size" required>
+                                                    <option value="select">Bir beden seçin</option>
+                                                    {% for rs in sizes %}
+                                                        <option value="{{ rs.title }}">{{ rs.title }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="country-select">
+                                                <select name="product_color" required>
+                                                    <option value="select">Bir renk seç</option>
+                                                    {% for rs in colors %}
+                                                        <option value="{{ rs.title }}">{{ rs.title }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="contact-btn">
+                                        <button style="margin: 7px;" type="submit" onclick="submitForm1(event)"
+                                                class="fill-btn"><i class="fa fa-shopping-cart"></i> Sepete ekle
+                                        </button>
+                                        <button style="padding: 0 45px; height: 60px; width: 211px; margin: 7px;   "
+                                                type="submit" onclick="submitForm2(event)" class="border-btn"> Satın almak
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="sidebar-widget-wrapper mb-60">
+                            <div class="sidebar-widget">
+                                <h4 class="sidebar-widget-title">Ürün</h4>
+                                <div class="sidebar-widget-content">
+                                    <div class="contact-list">
+                                        <div class="contact-list-item">
+                                            <div class="irc-item">
+                                                <div class="irc-item-content">
+                                                    <img width="300" src="{{ product.image.url }}"
+                                                         alt="img">
+                                                    <br>
+                                                    <br>
+                                                    <a href="{% url 'index' %}"><h3
+                                                            style="text-align: center;">{{ product.title }}</h3></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- contact main area end  -->
+
+        <div class="pt-60 pb-60"></div>
+    </main>
+
+
+    <script>
+        function submitForm1(event) {
+            event.preventDefault();
+            var sizeSelect = document.getElementsByName("product_size")[0];
+            var sizeValue = sizeSelect.options[sizeSelect.selectedIndex].value;
+            var colorSelect = document.getElementsByName("product_color")[0];
+            var colorValue = colorSelect.options[colorSelect.selectedIndex].value;
+            var alertMessage = document.getElementById("alert-message");
+
+            if (sizeValue === "select" || colorValue === "select") {
+                alertMessage.innerHTML = '<div class="danger"><span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>Lütfen Beden ve Renk seçiniz!</div><br>';
+                return false;
+            } else {
+                document.getElementById("info-form").action = "{% url 'add-cart' product.id %}";
+                document.getElementById("info-form").submit();
+            }
+        }
+
+        function submitForm2(event) {
+            event.preventDefault();
+            var sizeSelect = document.getElementsByName("product_size")[0];
+            var sizeValue = sizeSelect.options[sizeSelect.selectedIndex].value;
+            var colorSelect = document.getElementsByName("product_color")[0];
+            var colorValue = colorSelect.options[colorSelect.selectedIndex].value;
+            var alertMessage = document.getElementById("alert-message");
+
+            if (sizeValue === "select" || colorValue === "select") {
+                alertMessage.innerHTML = '<div class="danger"><span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>Lütfen Beden ve Renk seçiniz!</div><br>';
+                return false;
+            } else {
+                document.getElementById("info-form").action = "{% url 'to-session' product.id %}";
+                document.getElementById("info-form").submit();
+            }
+        }
+    </script>
+{% endblock %}
